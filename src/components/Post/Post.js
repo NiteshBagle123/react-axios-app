@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './Post.css';
-import { render } from 'react-dom';
 
 const post = (props) => {
     console.log(props);

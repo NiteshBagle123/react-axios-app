@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import axios from '../../axios';
 import Post from '../../components/Post/Post';
 import './Posts.css';
+import FullPost from '../FullPost/FullPost';
 
 class Posts extends Component {
     state = {
@@ -10,7 +11,6 @@ class Posts extends Component {
     };
     
     componentDidMount() {
-        console.log(this.props);
         axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(response => {
                 const post = response.data.slice(0, 4);
@@ -32,7 +32,7 @@ class Posts extends Component {
 
     fullPostHandler = id => {
        //this.props.history.push({pathname: `/${id}`});
-       this.props.history.push(`/${id}`);
+       this.props.history.push(`${this.props.match.url}/${id}`);
     }
 
     render(){
@@ -48,9 +48,12 @@ class Posts extends Component {
         );
 
         return (
-            <section className="Posts">
-                {post}
-            </section>
+            <div>
+                <section className="Posts">
+                    {post}
+                </section>
+                <Route path={this.props.match.url + '/:id'} exact component={FullPost}/>
+            </div>
         );
     }
 }
